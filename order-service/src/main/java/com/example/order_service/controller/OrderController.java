@@ -62,10 +62,6 @@ public class OrderController {
         return "Order deleted successfully";
     }
 
-    @GetMapping("/{id}")
-    public ProductDto getProductById(@PathVariable Long id) {
-        return orderService.getProductById(id);
-    }
 
 
     public OrderDto fallbackGetProductById(Long id, Throwable throwable) {
