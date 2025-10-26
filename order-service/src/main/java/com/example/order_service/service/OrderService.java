@@ -8,6 +8,7 @@ import com.example.order_service.model.Order;
 import com.example.order_service.repository.OrderRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,15 +26,23 @@ public class OrderService {
         this.orderRepository=orderRepository;
     }
 
+//      added pagination
+//    public List<OrderDto> getAllOrders(int pageNo, int recordCount) {
+//        Pageable pageable = PageRequest.of(pageNo, recordCount);
+//        return orderRepository.findAll(pageable)
+//                .stream()
+//                .map(this::convertToDto)
+//                .collect(Collectors.toList());
+//    }
+
 
     public List<OrderDto> getAllOrders(int pageNo, int recordCount) {
-        Pageable pageable = PageRequest.of(pageNo, recordCount);
+        Pageable pageable = PageRequest.of(pageNo, recordCount, Sort.by("id"));
         return orderRepository.findAll(pageable)
                 .stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
-
     // Create a new product from DTO
     public OrderDto createOrder(OrderDto orderDto) {
         Order order = convertToEntity(orderDto);

@@ -22,7 +22,7 @@ public class OrderController {
     private final ProductClient productClient;
 
     private final Environment env;
-
+int pageNo =0;
     @Autowired
     public OrderController(OrderService orderService, ProductClient productClient, Environment env) {
         this.orderService = orderService;
@@ -31,13 +31,32 @@ public class OrderController {
     }
 
     //added pagination
+//    @GetMapping("/{pageNo}/{recordCount}")
+//    public List<OrderDto> getAllOrders(
+//            @PathVariable int pageNo,
+//            @PathVariable int recordCount) {
+//
+//        log.info("Orders service running on port: {}", env.getProperty("local.server.port"));
+//        return orderService.getAllOrders(pageNo, recordCount);
+//    }
+
+    //added pagination and sorting
     @GetMapping("/{pageNo}/{recordCount}")
     public List<OrderDto> getAllOrders(
             @PathVariable int pageNo,
             @PathVariable int recordCount) {
 
+        if (pageNo < 1) {
+            throw new IllegalArgumentException("Page number must be 1 or greater");
+        }
+        if (recordCount < 1) {
+            throw new IllegalArgumentException("Record count must be at least 1");
+        }
+
         log.info("Orders service running on port: {}", env.getProperty("local.server.port"));
-        return orderService.getAllOrders(pageNo, recordCount);
+
+        // Convert 1-based user page to 0-based Spring page
+        return orderService.getAllOrders(pageNo - 1, recordCount);
     }
 
     @GetMapping("/{id}")
