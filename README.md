@@ -1,0 +1,3 @@
+NOTE: when ever if u create same microservice instance with different port numbers , in this project order-service running in port 8081 and 8082 
+for one instance i have used the application.properties files with server.port =8081 and for the other instance i have created the another application with same name **OrderServiceApplication1** for this 
+go to Edit configuration -> click on " + "  here i gave the application name as **OrderServiceApplication1** -> give module as **order-service** and  main class as **com.example.order_service.OrderServiceApplication** -> in the environment variables  add **server.port =8082**
