@@ -30,10 +30,14 @@ public class OrderController {
         this.env = env;
     }
 
-    @GetMapping
-    public List<OrderDto> getAllOrders() {
-        System.out.println(env.getProperty("local.server.port"));
-        return orderService.getAllOrders();
+    //added pagination
+    @GetMapping("/{pageNo}/{recordCount}")
+    public List<OrderDto> getAllOrders(
+            @PathVariable int pageNo,
+            @PathVariable int recordCount) {
+
+        log.info("Orders service running on port: {}", env.getProperty("local.server.port"));
+        return orderService.getAllOrders(pageNo, recordCount);
     }
 
     @GetMapping("/{id}")

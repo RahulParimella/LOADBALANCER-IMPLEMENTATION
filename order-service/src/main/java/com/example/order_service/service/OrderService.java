@@ -6,6 +6,8 @@ import com.example.order_service.dto.OrderDto;
 import com.example.order_service.dto.ProductDto;
 import com.example.order_service.model.Order;
 import com.example.order_service.repository.OrderRepository;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,8 +26,9 @@ public class OrderService {
     }
 
 
-    public List<OrderDto> getAllOrders(){
-        return orderRepository.findAll()
+    public List<OrderDto> getAllOrders(int pageNo, int recordCount) {
+        Pageable pageable = PageRequest.of(pageNo, recordCount);
+        return orderRepository.findAll(pageable)
                 .stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
